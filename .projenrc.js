@@ -5,9 +5,18 @@ const project = new typescript.TypeScriptProject({
   license: 'MIT',
   copyrightOwner: 'Dynamic Labs',
 
-  // deps: [],                /* Runtime dependencies of this module. */
+  deps: ['passport@^0.5.2', 'jsonwebtoken@^8.5.1'],
+
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
+  devDeps: [
+    'supertest@^6.2.3',
+    '@types/supertest',
+    '@types/passport@^1.0.7',
+    '@types/jsonwebtoken@^8.5.8',
+    '@types/express@4.17.13',
+    'keypair',
+    'express',
+  ] /* Build dependencies for this module. */,
   // packageName: undefined,  /* The "name" in package.json. */
 });
 project.synth();
