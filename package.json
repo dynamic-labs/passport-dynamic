@@ -1,5 +1,5 @@
 {
-  "name": "passport-dynamic",
+  "name": "@dynamic-labs/passport-dynamic",
   "repository": {
     "type": "git",
     "url": "https://github.com/dynamic-labs/passport-dynamic.git"
