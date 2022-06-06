@@ -1,7 +1,7 @@
 const { typescript } = require('projen');
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
-  name: 'passport-dynamic',
+  name: '@dynamic-labs/passport-dynamic',
   license: 'MIT',
   copyrightOwner: 'Dynamic Labs',
 
