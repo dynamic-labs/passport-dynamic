@@ -18,5 +18,9 @@ const project = new typescript.TypeScriptProject({
     'express',
   ] /* Build dependencies for this module. */,
   // packageName: undefined,  /* The "name" in package.json. */
+  releaseToNpm: true,
+  repository: 'https://github.com/dynamic-labs/passport-dynamic.git',
+  npmDistTag: 'latest',
+  npmRegistryUrl: 'https://registry.npmjs.org',
 });
 project.synth();

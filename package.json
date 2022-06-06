@@ -1,5 +1,9 @@
 {
   "name": "passport-dynamic",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dynamic-labs/passport-dynamic.git"
+  },
   "scripts": {
     "build": "npx projen build",
     "bump": "npx projen bump",
