@@ -24,5 +24,6 @@ const project = new typescript.TypeScriptProject({
   repository: 'https://github.com/dynamic-labs/passport-dynamic.git',
   npmDistTag: 'latest',
   npmRegistryUrl: 'https://registry.npmjs.org',
+  packageManager: 'npm',
 });
 project.synth();
