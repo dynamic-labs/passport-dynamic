@@ -1,8 +1,7 @@
 import { IncomingHttpHeaders } from 'http2';
 import { Jwt, JwtPayload, Secret } from 'jsonwebtoken';
-import type { StrategyCreated, StrategyCreatedStatic } from 'passport';
 // eslint-disable-next-line no-duplicate-imports
-import { Strategy } from 'passport';
+import { Strategy } from 'passport-strategy';
 import { verifyToken } from './verifyToken';
 
 interface StrategyOptions {
@@ -15,6 +14,7 @@ interface Request {
 
 export class DynamicStrategy extends Strategy {
   authHeaderRegex = /(\S+)\s+(\S+)/;
+  name = 'dynamicStrategy';
 
   _secretOrKeyProvider: (request: Request, rawJwtToken: any, done: any) => void;
   verify: (payload: Jwt | JwtPayload | string | undefined, done: any) => void;
@@ -33,8 +33,6 @@ export class DynamicStrategy extends Strategy {
       );
     }
 
-    this.name = 'dynamicStrategy';
-
     this.verify = verify;
 
     // Passport expects this to be a callback. Our publicKey is static so
@@ -44,15 +42,11 @@ export class DynamicStrategy extends Strategy {
     };
   }
 
-  authenticate(
-    this: StrategyCreated<this, this & StrategyCreatedStatic>,
-    req: Request,
-    _options?: any,
-  ) {
+  authenticate(req: Request, _options?: any) {
     const token = this.jwtFromRequest(req);
 
     if (!token) {
-      return this.fail('Missing JWT token');
+      return this.fail('Missing JWT token', 401);
     }
 
     this._secretOrKeyProvider(
@@ -61,13 +55,13 @@ export class DynamicStrategy extends Strategy {
       (_secretOrKeyError: any, secretOrKey: Secret) => {
         return verifyToken(token, secretOrKey, (err, payload) => {
           if (err) {
-            return this.fail('Invalid token');
+            return this.fail('Invalid token', 401);
           } else {
             const verified = (error: any, user: object, info: object) => {
               if (error) {
                 return this.error(error);
               } else if (!user) {
-                return this.fail('User not found');
+                return this.fail('User not found', 401);
               } else {
                 return this.success(user, info);
               }
@@ -75,7 +69,7 @@ export class DynamicStrategy extends Strategy {
 
             try {
               this.verify(payload, verified);
-            } catch (ex) {
+            } catch (ex: any) {
               return this.error(ex);
             }
           }
