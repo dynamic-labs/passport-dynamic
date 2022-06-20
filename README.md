@@ -36,7 +36,6 @@ The publicKey from Dynamic used by passport to validate the authenticity of the 
 const publicKey = `-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEArplf0W2SNo6PR9xXv7HgYyuoQ9fedrP/flHatSgV2RbySQMz0G6DoiqBwe/woq7X0EyfLJwS9vcvgSks3mGRndfVwyKM5dTTJn0TGos2QLy5bHcjuIJtu1CAv9xcge3FpDEIi7fzo+Lt5eDA92e/TvhSAUS7CZhLMgjPau8Lr8UB+pg0NcGrQpRV7FikZ3ner7uZy6JpxKBS+oOCd7EZz+gOdCJWTl6FsEPHU0R2ei0FL+ng5eDECr0VCfNysnicY87OHM5hzWKt/nItv0Ai+9efztpwBSzWlOUWyMCC3HR4b+MZvzHP9z61OKGuOrlhC5qqmaXuIv8GRuapfiCH6QIDAQAB\n-----END RSA PUBLIC KEY-----`;
 ```
 
-
 ### Verify
 
 `verify` is a function with the parameters `verify(payload, done)`
@@ -46,7 +45,7 @@ const publicKey = `-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEArplf0W2SNo6PR9xXv
 
 Example:
 
-```jsx
+```typescript
 passport.use(new DynamicStrategy(options, (payload, done) => {
 	try {
 		const user = { id: 1, email: "hello@example.com" }
@@ -60,6 +59,46 @@ passport.use(new DynamicStrategy(options, (payload, done) => {
 		return done(err, false);
 	}
 }
+```
+
+### Protecting an endpoint with the strategy
+
+First define a function that calls `passport.authenticate` with the strategy name (in our case, `dynamicStrategy`)
+
+```typescript
+const isAuthorized = () => (req: any, res: any, next: any) => {
+  try {
+    return passport.authenticate('dynamicStrategy', {
+      session: false,
+      failWithError: true,
+    })(req, res, next);
+  } catch (err) {
+    return next(err);
+  }
+};
+```
+
+Then, add the function to the route you want to protect:
+
+```typescript
+app.post('/login', isAuthorized(), function (req, res) {
+  res.redirect('/');
+});
+```
+
+Passport can support multiple strategies at once so it's possible to define a variation of `isAuthorized` that takes an array of strategy names instead. When multiple strategies are provided, they will be evaluated in the order in which they are provided, i.e if `['dynamicStrategy', 'otherStrategy']` is provided, `otherStrategy` will only be called if `dynamicStrategy` fails
+
+```typescript
+const isAuthorized = () => (req: any, res: any, next: any) => {
+  try {
+    return passport.authenticate(['dynamicStrategy', 'otherStrategy'], {
+      session: false,
+      failWithError: true,
+    })(req, res, next);
+  } catch (err) {
+    return next(err);
+  }
+};
 ```
 
 ## Tests
