@@ -30,7 +30,12 @@ new DynamicStrategy(options, verify);
 
 `publicKey`
 
-The publicKey from Dynamic used by passport to validate the authenticity of the JWT and ensure that it has not been tampered with.
+The publicKey from Dynamic used by passport to validate the authenticity of the JWT and ensure that it has not been tampered with. It needs to be a string with no whitespaces can be parsed into a valid PEM, e.g:
+
+```javascript
+const publicKey = `-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEArplf0W2SNo6PR9xXv7HgYyuoQ9fedrP/flHatSgV2RbySQMz0G6DoiqBwe/woq7X0EyfLJwS9vcvgSks3mGRndfVwyKM5dTTJn0TGos2QLy5bHcjuIJtu1CAv9xcge3FpDEIi7fzo+Lt5eDA92e/TvhSAUS7CZhLMgjPau8Lr8UB+pg0NcGrQpRV7FikZ3ner7uZy6JpxKBS+oOCd7EZz+gOdCJWTl6FsEPHU0R2ei0FL+ng5eDECr0VCfNysnicY87OHM5hzWKt/nItv0Ai+9efztpwBSzWlOUWyMCC3HR4b+MZvzHP9z61OKGuOrlhC5qqmaXuIv8GRuapfiCH6QIDAQAB\n-----END RSA PUBLIC KEY-----`;
+```
+
 
 ### Verify
 
