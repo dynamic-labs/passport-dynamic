@@ -21,7 +21,10 @@
     },
     {
       "name": "@types/passport",
-      "version": "^1.0.7",
+      "type": "build"
+    },
+    {
+      "name": "@types/passport-strategy",
       "type": "build"
     },
     {
@@ -83,6 +86,10 @@
       "type": "build"
     },
     {
+      "name": "passport",
+      "type": "build"
+    },
+    {
       "name": "projen",
       "type": "build"
     },
@@ -111,8 +118,7 @@
       "type": "runtime"
     },
     {
-      "name": "passport",
-      "version": "^0.5.2",
+      "name": "passport-strategy",
       "type": "runtime"
     }
   ],
