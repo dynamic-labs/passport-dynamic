@@ -44,7 +44,7 @@
     "jest-junit": "^13",
     "json-schema": "^0.4.0",
     "keypair": "^1.0.4",
-    "npm-check-updates": "^12",
+    "npm-check-updates": "^16",
     "passport": "^0.6.0",
     "projen": "^0.56.35",
     "standard-version": "^9",
