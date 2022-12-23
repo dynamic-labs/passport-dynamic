@@ -5,7 +5,7 @@ const project = new typescript.TypeScriptProject({
   license: 'MIT',
   copyrightOwner: 'Dynamic Labs',
 
-  deps: ['passport-strategy', 'jsonwebtoken@^8.5.1'],
+  deps: ['passport-strategy', 'jsonwebtoken@^9.0.0'],
 
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   devDeps: [
