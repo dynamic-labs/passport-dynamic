@@ -33,7 +33,7 @@ describe('verifyToken', () => {
   });
 
   it('returns an error if the token has not been signed with `RS256`', async () => {
-    const otherOptions = { algorithm: 'HS256' };
+    const otherOptions = { algorithm: 'RS512' };
     const signedToken = generateJWT(body, keys.private, otherOptions);
 
     verifyToken(signedToken, keys.public, (err: any, _decoded: any) => {
@@ -45,7 +45,7 @@ describe('verifyToken', () => {
     const signedToken = generateJWT(body, keys.private, options);
 
     verifyToken(signedToken, 'not a valid pem', (err: any, _decoded: any) => {
-      expect(err?.message).toMatch(/PEM routines:get_name:no start line/);
+      expect(err?.message).toMatch(/secretOrPublicKey must be an asymmetric key when using RS256/);
     });
   });
 
