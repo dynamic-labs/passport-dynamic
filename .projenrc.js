@@ -13,7 +13,7 @@ const project = new typescript.TypeScriptProject({
     '@types/supertest',
     '@types/passport',
     '@types/passport-strategy',
-    '@types/jsonwebtoken@^8.5.8',
+    '@types/jsonwebtoken@^9.0.2',
     '@types/express@4.17.13',
     'keypair',
     'express',
