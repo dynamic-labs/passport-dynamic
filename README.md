@@ -61,6 +61,31 @@ passport.use(new DynamicStrategy(options, (payload, done) => {
 }
 ```
 
+#### Verify Scopes
+
+It's important to note that a JWT token can include scopes. The most common scope is when a token requires additional authentication such as MFA. In this event we may not want to fully verify, and ruturn false if the token has the `requiresAdditionalAuth` scope.
+
+Example:
+
+```typescript
+passport.use(new DynamicStrategy(options, (payload, done) => {
+	try {
+		const user = {
+      id: payload.sub,
+      scopes: payload.scopes
+    }
+
+		if (user && !user.scopes.includes('requiresAdditionalAuth')) {
+			return done(null, user)
+		} else {
+			return done(null, false)
+		}
+	} catch (err) {
+		return done(err, false);
+	}
+}
+```
+
 ### Protecting an endpoint with the strategy
 
 First define a function that calls `passport.authenticate` with the strategy name (in our case, `dynamicStrategy`)
