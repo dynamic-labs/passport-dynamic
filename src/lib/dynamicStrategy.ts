@@ -4,7 +4,7 @@ import { Jwt, JwtPayload, Secret } from 'jsonwebtoken';
 import { Strategy } from 'passport-strategy';
 import { verifyToken } from './verifyToken';
 
-interface StrategyOptions {
+export interface StrategyOptions {
   publicKey: string;
 }
 
